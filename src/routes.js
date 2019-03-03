@@ -4,13 +4,16 @@ var routes = express.Router()
 const ProfileController = require('./controllers/ProfileController')
 
 routes.get(['/', '/index'], (req, res) => {
-   res.render('../public/index.ejs')
+   res.render('index.ejs')
 })
 
 routes.post('/profile/create/', ProfileController.create)
 routes.get('/profile/view/:id', ProfileController.read)
 routes.get('/profiles/', ProfileController.all)
+
+routes.get('/profile/edit/:id', ProfileController.edit)
 routes.put('/profile/update/:id', ProfileController.update)
-routes.delete('/profile/delete/:id', ProfileController.delete)
+
+routes.get('/profile/delete/:id', ProfileController.delete)
 
 module.exports = routes

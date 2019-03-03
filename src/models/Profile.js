@@ -17,14 +17,14 @@ const ProfileSchema = new mongoose.Schema({
       required: true
    },
 
-   friends: {
-      type: Number,
-      default: 0,
+   email: {
+      type: String,
       required: true,
    },
 
    about: {
       type: String,
+      default: 'Empty',
       required: false,
    },
 

@@ -4,12 +4,14 @@ const requireDir = require('require-dir')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const methodOverride = require('method-override')
 
 const app = express()
 
 app.use(express.json())
 app.use(express.static(__dirname + "/public"))
 
+app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 

@@ -4,46 +4,101 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <title>READ Profiles</title>
+   <title>Profiles - Manage</title>
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   <link rel="stylesheet" href="css/base.css">
+   <link rel="stylesheet" href="/css/base.css">
 </head>
 <body>
    <div id="content">
 
       <div id="header-menu">
          <nav class="navbar navbar-expand-md navbar-dark">
-            <a class="navbar-brand"><h4>Perfis</h4></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" >
-               <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navigation">
-               <ul class="navbar-nav">
-                  <li class="nav-item">
-                     <a href="/" class="nav-link">criar</a>
-                  </li>
-                  <li class="nav-item">
-                     <a href="/profiles" class="nav-link">gerenciar</a>
-                  </li>
-               </ul>
-            </div>
-         </nav>
+               <a class="navbar-brand"><h4>Profiles</h4></a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" >
+                  <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="navigation">
+                  <ul class="navbar-nav">
+                     <li class="nav-item">
+                        <a href="/" class="nav-link">create</a>
+                     </li>
+                     <li class="nav-item">
+                        <a href="/profiles" class="nav-link">manage</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
       </div>
    
-      <div id="main">
-         <h3>Perfis cadastrados</h3>
+      <div id="main" class="table-responsive">
+         <h3>Manage profiles</h3>
          <hr>
-         <% data.forEach((perfil) => { %>
-            <p><%= perfil.name %></p>
-         <% }) %>
+         <table class="table bg-light rounded">
+            <thead>
+               <tr>
+                  <th>Manage</th>
+                  <th>Name</th>
+                  <th>E-mail</th>
+                  <th>Gender</th>
+                  <th>Birth</th>
+                  <th>Country</th>
+                  <th>About</th>
+                  <th>Profile Image</th>
+               </tr> 
+            </thead>
+            <tbody>
+               <% data.forEach(profile => { %>
+                  <tr>
+                     <th><a href="#" class="btn btn-danger" onclick="confirmarExclusao('<%= profile._id %>', '<%= profile.name %>')"><i class="fas fa-trash-alt"></i></a> <a href="/profile/edit/<%=profile._id%>" class="btn btn-warning"><i class="fas fa-edit"></i></a></th>
+                     <td><%= profile.name %></td>
+                     <td><%= profile.email %></td>
+                     <td><%= profile.gender %></td>
+                     <td><%= profile.birth %></td>
+                     <td><%= profile.country %></td>
+                     <td>
+                        <%if(profile.about.length > 0){%>
+                           <%= profile.about %>
+                        <%}else{%>
+                           <i>Blank</i>
+                        <%}%>
+                     </td>
+                     <td><a href="<%= profile.profileImg %>" target="_blank">Profile Img</a></td>
+                  </tr>
+               <% }) %>
+            </tbody>
+         </table>
+
+         <div class="container-fluid">
+            <div class="row justify-content-end">
+               <nav>
+                  <ul class="pagination pagination-md">
+                     <% for(x=1 ; x <= pages ; x++ ){%>
+                        <li class="page-item">
+                           <a class="page-link" href="?page=<%=x%>"> <%=x%> </a>
+                        </li>
+                     <%}%>
+                  </ul>
+               </nav>
+            </div>
+         </div>
+
       </div>
    
       <div id="footer">
-         <p>CRUD em NodeJS criado por: <a href="github.com/ronaldscruz" target="_blank">ronaldscruz</a></p>
+         <p>CRUD using NodeJS created with ❤ by: <a href="github.com/ronaldscruz" target="_blank">ronaldscruz</a></p>
       </div>
 
    </div>
 
+   <script>
+      function confirmarExclusao(id, alvo){
+         var confirma = confirm(`Deseja mesmo excluir ${alvo}?`)
+         if(confirma === true){
+            window.location = ("/profile/delete/"+id)
+         }
+      }
+   </script>
    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

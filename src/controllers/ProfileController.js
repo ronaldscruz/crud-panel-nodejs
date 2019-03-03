@@ -15,18 +15,22 @@ module.exports = {
 
    async all(req,res){
       const {page = 1} = req.query
-      const profiles = await Profile.paginate({}, {page, limit: 10})
-      res.render('perfis.ejs', {data: profiles.docs})
-      return res.json(profiles.docs)
+      const profiles = await Profile.paginate({}, {page, limit: 4})
+      return res.render('perfis.ejs', {data: profiles.docs, page: profiles.page, pages: profiles.pages})
+   },
+
+   async edit(req, res){
+      const profile = await Profile.findById(req.params.id)
+      return res.render('edit.ejs', {data: profile})
    },
 
    async update(req, res){
-      const profile = await Profile.findByIdAndUpdate(req.params.id, req.body, {new: true})
-      return res.json(profile)
+      await Profile.findByIdAndUpdate(req.params.id, req.body, {new: true})
+      return res.redirect('/profiles')
    },
 
    async delete(req, res){
       await Profile.findByIdAndDelete(req.params.id)
-      return res.send()
+      return res.redirect('/profiles')
    }
 }
