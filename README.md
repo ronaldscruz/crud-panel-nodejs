@@ -1,2 +1,2 @@
 # crud-panel-nodejs
-um painel simples para gerenciar uma única entidade do banco
+painel administrativo em EJS para gerenciar uma entidade do banco de dados
